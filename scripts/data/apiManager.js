@@ -1,20 +1,24 @@
 const apiURL = "http://localhost:8088";
 
-//// user functions
+///////////////////////////////////// USER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 let loggedInUser = {}
 
+//GET LOGGED IN USER
 export const getLoggedInUser = () => {
 	return { ...loggedInUser };
 }
 
+//LOG OUT USER
 export const logoutUser = () => {
 	loggedInUser = {}
 }
 
+//SET LOGGED IN USER
 export const setLoggedInUser = (userObj) => {
 	loggedInUser = userObj;
 }
 
+//LOG IN USER
 export const loginUser = (userObj) => {
 	return fetch(`${apiURL}/users?name=${userObj.name}&email=${userObj.email}`)
 		.then(response => response.json())
@@ -30,6 +34,7 @@ export const loginUser = (userObj) => {
 		})
 }
 
+//REGISTER USER
 export const registerUser = (userObj) => {
 	return fetch(`${apiURL}/users`, {
 		method: "POST",
@@ -45,11 +50,11 @@ export const registerUser = (userObj) => {
 		})
 }
 
-
-///// snack functions
+/////////////////////////////////// SNACK FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 let snackCollection = [];
 
+//useSnackCollection()
 export const useSnackCollection = () => {
   //Best practice: we don't want to alter the original state, so
   //make a copy of it and then return it
@@ -58,6 +63,7 @@ export const useSnackCollection = () => {
   return snackCollectionCopy;
 }
 
+//getSnacks()
 export const getSnacks = () => {
 	return fetch(`${apiURL}/snacks`)
 		.then(response => response.json())
@@ -67,6 +73,7 @@ export const getSnacks = () => {
 		})
 }
 
+//getSingleSnack()
 export const getSingleSnack = (snackId) => {
 	return fetch(`${apiURL}/snacks/${snackId}`)
 	.then(response => response.json())

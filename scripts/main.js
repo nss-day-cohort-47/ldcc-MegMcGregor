@@ -1,5 +1,8 @@
 console.log('yum, yum, yum');
 
+//. display the full value of each property on the details page(not the id). 
+//Hint: Use one of json-servers relationship features. (add expand / embed) 1:19
+
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
 import { NavBar } from "./nav/NavBar.js";
@@ -11,19 +14,20 @@ import {
 	getSnacks, getSingleSnack
 } from "./data/apiManager.js";
 
-
-
 const applicationElement = document.querySelector("#ldsnacks");
 
-//login/register listeners
+////////////////////EVENT LISTENERS\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//LOGIN SUBMIT BUTTON
 applicationElement.addEventListener("click", event => {
 	event.preventDefault();
 	if (event.target.id === "login__submit") {
 		//collect all the details into an object
 		const userObject = {
 			name: document.querySelector("input[name='name']").value,
-			email: document.querySelector("input[name='email']").value
+			email: document.querySelector("input[name='email']").value,
 		}
+		console.log(userObject);
 		loginUser(userObject)
 			.then(dbUserObj => {
 				if (dbUserObj) {
@@ -39,7 +43,7 @@ applicationElement.addEventListener("click", event => {
 		//collect all the details into an object
 		const userObject = {
 			name: document.querySelector("input[name='registerName']").value,
-			email: document.querySelector("input[name='registerEmail']").value
+			email: document.querySelector("input[name='registerEmail']").value,
 		}
 		registerUser(userObject)
 			.then(dbUserObj => {
@@ -49,6 +53,7 @@ applicationElement.addEventListener("click", event => {
 	}
 })
 
+//LOGOUT BUTTON
 applicationElement.addEventListener("click", event => {
 	if (event.target.id === "logout") {
 		logoutUser();
@@ -56,9 +61,8 @@ applicationElement.addEventListener("click", event => {
 		checkForUser();
 	}
 })
-// end login register listeners
 
-// snack listeners
+//CAKE DETAILS BUTTON
 applicationElement.addEventListener("click", event => {
 	event.preventDefault();
 
@@ -71,6 +75,7 @@ applicationElement.addEventListener("click", event => {
 	}
 })
 
+//ALL SNACKS BUTTON
 applicationElement.addEventListener("click", event => {
 	event.preventDefault();
 	if (event.target.id === "allSnacks") {
@@ -78,12 +83,14 @@ applicationElement.addEventListener("click", event => {
 	}
 })
 
+
+//showDetails()
 const showDetails = (snackObj) => {
 	const listElement = document.querySelector("#mainContent");
 	listElement.innerHTML = SnackDetails(snackObj);
 }
-//end snack listeners
 
+//checkForUer()
 const checkForUser = () => {
 	if (sessionStorage.getItem("user")) {
 		setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
@@ -96,15 +103,18 @@ const checkForUser = () => {
 	}
 }
 
+//showLoginRegister()
 const showLoginRegister = () => {
 	//template strings can be used here too
 	applicationElement.innerHTML += `${LoginForm()} <hr/> <hr/> ${RegisterForm()}`;
 }
 
+//showNavBar()
 const showNavBar = () => {
 	applicationElement.innerHTML += NavBar();
 }
 
+//showSnackList()
 const showSnackList = () => {
 	getSnacks().then(allSnacks => {
 		const listElement = document.querySelector("#mainContent")
@@ -112,10 +122,12 @@ const showSnackList = () => {
 	})
 }
 
+//showFooter()
 const showFooter = () => {
 	applicationElement.innerHTML += Footer();
 }
 
+//startLDSnacks//
 const startLDSnacks = () => {
 	applicationElement.innerHTML = "";
 	showNavBar();
