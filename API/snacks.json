@@ -439,6 +439,18 @@
       "name": "courtney",
       "email": "courtney@home.com",
       "id": 2
+    },
+    {
+      "name": "LD",
+      "email": "LD@littledebbie.com",
+      "isAdmin": true,
+      "id": 3
+    },
+    {
+      "name": "hello",
+      "email": "hello@home.com",
+      "isAdmin": false,
+      "id": 4
     }
   ]
 }

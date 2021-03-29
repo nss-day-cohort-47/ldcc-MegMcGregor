@@ -1,7 +1,13 @@
 console.log('yum, yum, yum');
 
-//. display the full value of each property on the details page(not the id). 
-//Hint: Use one of json-servers relationship features. (add expand / embed) 1:19
+// Go back and figure out why inFlavor won't display in the details section
+
+//Make LD the admin and everyone else NOT the admin
+
+// There should be a list of toppings stored in the database
+// There should be some way to mix and match the toppings with the snacks!
+// Each snack should be able to have multiple toppings, (or no toppings at all).
+// Each topping should be able to go on multiple snacks, (or no snacks at all).
 
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
@@ -44,6 +50,7 @@ applicationElement.addEventListener("click", event => {
 		const userObject = {
 			name: document.querySelector("input[name='registerName']").value,
 			email: document.querySelector("input[name='registerEmail']").value,
+			isAdmin: false
 		}
 		registerUser(userObject)
 			.then(dbUserObj => {
