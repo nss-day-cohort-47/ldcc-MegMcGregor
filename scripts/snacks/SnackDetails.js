@@ -1,4 +1,4 @@
-export const SnackDetails = (snackObject) => {
+export const SnackDetails = (snackObject, toppingObject) => {
 	return `
 	<div class="col">
 		<div class="card shadow-sm" >

@@ -1,8 +1,16 @@
 import { getLoggedInUser } from "../data/apiManager.js"
 
-export const NavBar = () => {
+
+const createOptions = (menu) => {
+ let menuArray = menu.map(menuItem => {
+	 return `<option value="item">${menuItem.name}</option>`
+ })
+ return menuArray;
+}
+
+export const NavBar = (menu) => {
+	console.log(createOptions(menu))
 	//only show navItems and addTypeButton if user is logged in
-	
 	const navItems = getLoggedInUser().id ? `
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -15,9 +23,7 @@ export const NavBar = () => {
 		<li class="nav-item ms-1">
 			<select class="form-select form-select btn-info" aria-label="Select A Topping">
 				<option selected>Select A Topping</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
+				${createOptions(menu)}
 			</select>
 		</li>
 		<li class="nav-item ms-1">
@@ -25,7 +31,6 @@ export const NavBar = () => {
 		</li>
 	</ul>
 	</div>` : ""
-
 
 	const addTypeButton = getLoggedInUser().id ? `
 	<nav class="navbar navbar-light"">

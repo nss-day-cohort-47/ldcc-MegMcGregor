@@ -4,10 +4,15 @@ console.log('yum, yum, yum');
 
 //Make LD the admin and everyone else NOT the admin
 
-// There should be a list of toppings stored in the database
-// There should be some way to mix and match the toppings with the snacks!
-// Each snack should be able to have multiple toppings, (or no toppings at all).
-// Each topping should be able to go on multiple snacks, (or no snacks at all).
+// 1a. There should be a list of toppings stored in the database
+// 1b.There should be some way to mix and match the toppings with the snacks.
+// 2. The snack detail will need to display all the toppings for the one snack. Make this a comma separated list in a paragraph.
+// 3a.Club members would love to have the option to display snacks with particular toppings.
+// 3b. The dropdown menu should read from the toppings list in the DB and be displayed in the navbar. 
+// 3c. The dropdown list of all toppings should trigger a call to DB for only those snacks and then display them.
+
+
+
 
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
@@ -17,7 +22,7 @@ import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
 import {
 	logoutUser, setLoggedInUser, loginUser, registerUser, getLoggedInUser,
-	getSnacks, getSingleSnack
+	getSnacks, getSingleSnack, getSnackTopping, useSnackTopping, getSnackToppingDetail, useSnackToppingDetail
 } from "./data/apiManager.js";
 
 const applicationElement = document.querySelector("#ldsnacks");
@@ -92,12 +97,12 @@ applicationElement.addEventListener("click", event => {
 
 
 //showDetails()
-const showDetails = (snackObj) => {
+const showDetails = (snackObj, toppingObject) => {
 	const listElement = document.querySelector("#mainContent");
 	listElement.innerHTML = SnackDetails(snackObj);
 }
 
-//checkForUer()
+//checkForUser()
 const checkForUser = () => {
 	if (sessionStorage.getItem("user")) {
 		setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
@@ -117,8 +122,10 @@ const showLoginRegister = () => {
 }
 
 //showNavBar()
-const showNavBar = () => {
-	applicationElement.innerHTML += NavBar();
+const showNavBar = (menu) => {
+	console.log(menu);
+	// applicationElement.innerHTML += NavBar(menu);	
+	applicationElement.innerHTML += NavBar(menu);
 }
 
 //showSnackList()
@@ -134,14 +141,18 @@ const showFooter = () => {
 	applicationElement.innerHTML += Footer();
 }
 
+
 //startLDSnacks//
 const startLDSnacks = () => {
-	applicationElement.innerHTML = "";
-	showNavBar();
-	applicationElement.innerHTML += `<div id="mainContent"></div>`;
-	showSnackList();
-	showFooter();
-
+	getSnackTopping().then(() => {
+		const menu = useSnackTopping()
+		applicationElement.innerHTML = "";
+		showNavBar(menu);
+		applicationElement.innerHTML += `<div id="mainContent"></div>`;
+		showSnackList();
+		showFooter()
+	}
+	)
 }
 
 checkForUser();

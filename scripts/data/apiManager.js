@@ -78,3 +78,34 @@ export const getSingleSnack = (snackId) => {
 	return fetch(`${apiURL}/snacks/${snackId}?_expand=type&_expand=shape&expand=inFlavor&_expand=season`)
 	.then(response => response.json())
 }
+
+let toppingCollection = [];
+
+//useToppingCollection
+export const useSnackTopping = () => {
+	const toppingCollectionCopy = [...toppingCollection]
+	return toppingCollectionCopy;
+}
+
+// getSnackTopping()
+export const getSnackTopping = (snackId) => {
+	return fetch(`${apiURL}/toppings`)
+	.then(response => response.json())
+	.then(parsedResponse => {
+		toppingCollection = parsedResponse
+		return parsedResponse;
+	})
+}
+
+let snackToppingDetailArray = []
+
+//getSnackToppingDetail()
+export const getSnackToppingDetail = (toppingId) => {
+	return fetch(`${apiURL}/snackToppings?toppingId=${toppingId}&_expand=snack`)
+	.then(response => response.json())
+}
+
+export const useSnackToppingDetail = () => {
+	const snackToppingDetailArrayCopy = [...snackToppingDetailArray]
+	return snackToppingDetailArrayCopy
+}
